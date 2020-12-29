@@ -78,6 +78,7 @@ add_executable(moc-qt2
     )
 
 target_compile_definitions(moc-qt2 PRIVATE -DQT_NO_CODECS -DQT_LITE_UNICODE)
+target_compile_definitions(moc-qt2 PRIVATE -DYYDEBUG=1)
 
 # This is really not the most optimal or pretty way to add the include directories
 # But at least we avoid to polute the main cmakelist files
