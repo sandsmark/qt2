@@ -232,6 +232,7 @@ class Q_EXPORT QSenderObject : public QObject		// object for sending signals
 {
 public:
     void setSender( QObject *s ) { sigSender=s; }
+    static void setSenderSafe( QObject *s, QObject *r ) { r->sigSender=s; }
 };
 
 #ifdef QT_NO_TRANSLATION

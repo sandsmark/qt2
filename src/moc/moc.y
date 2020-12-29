@@ -2894,11 +2894,11 @@ void generateClass()		      // generate C++ source code for a class
 	}
 	fprintf( out, "    QConnectionListIt it(*clist);\n" );
 	fprintf( out, "    QConnection   *c;\n" );
-	fprintf( out, "    QSenderObject *object;\n" );
+	fprintf( out, "    QObject *object;\n" );
 	fprintf( out, "    while ( (c=it.current()) ) {\n" );
 	fprintf( out, "\t++it;\n" );
-	fprintf( out, "\tobject = (QSenderObject*)c->object();\n" );
-	fprintf( out, "\tobject->setSender( this );\n" );
+	fprintf( out, "\tobject = c->object();\n" );
+	fprintf( out, "\tQSenderObject::setSenderSafe( this, c->object() );\n" );
 	if ( nargs ) {
 	    fprintf( out, "\tswitch ( c->numArgs() ) {\n" );
 	    for ( i=0; i<=nargs; i++ ) {
