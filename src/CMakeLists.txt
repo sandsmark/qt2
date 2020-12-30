@@ -27,7 +27,7 @@
 list(APPEND QT_DEFINITIONS -DQT_BUILTIN_GIF_READER=1 -DQT_XFT)
 
 if(ENABLE_THREAD_SUPPORT)
-    list(APPEND QT_DEFINITIONS -DREENTRANT -DQT_THREAD_SUPPORT)
+    list(APPEND QT_DEFINITIONS -D_REENTRANT -DQT_THREAD_SUPPORT)
 endif()
 
 add_subdirectory(3rdparty)
@@ -76,9 +76,14 @@ target_link_libraries(Qt2
         OpenGL::GL
         PNG::PNG
         ZLIB::ZLIB
-    PUBLIC
-        Threads::Threads
     )
+
+if(ENABLE_THREAD_SUPPORT)
+    target_link_libraries(Qt2
+        PUBLIC
+        Threads::Threads
+        )
+endif()
 
 if(MNG_FOUND)
     list(APPEND QT_DEFINITIONS QT_NO_IMAGEIO_MNG)
