@@ -85,6 +85,11 @@ if(ENABLE_THREAD_SUPPORT)
         )
 endif()
 
+target_compile_definitions(Qt2
+    PUBLIC
+        ${QT_DEFINITIONS}
+    )
+
 if(MNG_FOUND)
     list(APPEND QT_DEFINITIONS QT_NO_IMAGEIO_MNG)
 endif()
