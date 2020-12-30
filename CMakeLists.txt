@@ -64,6 +64,11 @@ endif()
 
 if(ENABLE_THREAD_SUPPORT)
     find_package(Threads REQUIRED)
+
+    option(SANITIZE_THREADS "Enable runtime thread sanitizing (for development)")
+    if (SANITIZE_THREADS)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=thread")
+    endif()
 endif()
 
 if(ENABLE_OPENGL)
