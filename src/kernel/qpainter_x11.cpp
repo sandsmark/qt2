@@ -476,18 +476,20 @@ static inline void release_gc( void *ref )
 int qt_use_xft (void)
 {
     static int	checked_env=0;
-    static int	use_xft=0;
+    static int	use_xft=1;
 
     if (!checked_env) {
 	if (XftDefaultHasRender(qt_xdisplay())) {
 	    char *e = getenv ("QT_XFT");
-	    if ( e && (*e == '1' ||
-		       *e == 'y' || *e == 'Y' ||
-		       *e == 't' || *e == 'T' ))
-		use_xft = 1;
-	    else
+	    if ( e && (*e == '0' ||
+		       *e == 'n' || *e == 'N' ||
+		       *e == 'f' || *e == 'F' ))
 		use_xft = 0;
-	}
+	    else
+		use_xft = 1;
+	} else {
+            use_xft = 0;
+        }
 	checked_env = 1;
     }
     return use_xft;
