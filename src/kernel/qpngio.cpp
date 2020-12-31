@@ -353,6 +353,7 @@ void read_png_image(QImageIO* iio)
 	row_pointers[y]=jt[y];
     }
 
+    png_set_interlace_handling(png_ptr);
     png_read_image(png_ptr, row_pointers);
 
 #if 0 // libpng takes care of this.
