@@ -285,6 +285,10 @@ extern "C" {
 #endif
 static void qt_png_warning(png_structp /*png_ptr*/, png_const_charp message)
 {
+    static const char *wrongMsg = "Interlace handling should be turned on when using png_read_image";
+    if (strncmp(message, wrongMsg, strlen(wrongMsg)) == 0) {
+        return;
+    }
     qWarning("libpng warning: %s", message);
 }
 
@@ -353,7 +357,6 @@ void read_png_image(QImageIO* iio)
 	row_pointers[y]=jt[y];
     }
 
-    png_set_interlace_handling(png_ptr);
     png_read_image(png_ptr, row_pointers);
 
 #if 0 // libpng takes care of this.
@@ -1110,7 +1113,6 @@ int QPNGFormat::decode(QImage& img, QImageConsumer* cons,
 
 void QPNGFormat::info(png_structp png, png_infop)
 {
-    png_set_interlace_handling(png);
     setup_qt(*image, png, info_ptr);
 }
 
