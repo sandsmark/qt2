@@ -74,7 +74,6 @@ extern Atom qt_selection_property;
 extern Atom qt_selection_sentinel;
 extern Atom* qt_xdnd_str_to_atom( const char *mimeType );
 extern const char* qt_xdnd_atom_to_str( Atom );
-extern Atom qt_clipboard_atom;
 
 
 static QWidget * owner = 0;
@@ -203,7 +202,7 @@ void QClipboard::clear()
 bool QClipboard::ownsSelection() const
 {
     if (owner &&
-	XGetSelectionOwner(owner->x11Display(), qt_clipboard_atom) == owner->winId())
+	XGetSelectionOwner(owner->x11Display(), XA_PRIMARY) == owner->winId())
 	return TRUE;
 
     return FALSE;
@@ -221,10 +220,10 @@ void QClipboard::clobber()
     delete internalCbData;
     internalCbData = 0;
 
-    Window win =  XGetSelectionOwner(owner->x11Display(), qt_clipboard_atom);
+    Window win =  XGetSelectionOwner(owner->x11Display(), XA_PRIMARY);
 
     if (win == owner->winId())
-	XSetSelectionOwner(owner->x11Display(), qt_clipboard_atom, None, qt_x_time);
+	XSetSelectionOwner(owner->x11Display(), XA_PRIMARY, None, qt_x_time);
 }
 
 
@@ -496,7 +495,7 @@ bool QClipboard::event( QEvent *e )
 	// new selection owner
 #if defined(QT_CLIPBOARD_DEBUG)
 	qDebug("qclipboard_x11.cpp: new selection owner 0x%lx",
-	       XGetSelectionOwner(dpy, qt_clipboard_atom));
+	       XGetSelectionOwner(dpy, XA_PRIMARY));
 #endif
 
 	clipboardData()->clear();
@@ -718,7 +717,7 @@ QClipboardWatcher::QClipboardWatcher()
 bool QClipboardWatcher::empty() const
 {
     Display *dpy   = owner->x11Display();
-    return XGetSelectionOwner(dpy,qt_clipboard_atom) == None;
+    return XGetSelectionOwner(dpy,XA_PRIMARY) == None;
 }
 
 const char* QClipboardWatcher::format( int n ) const
@@ -804,7 +803,7 @@ QByteArray QClipboardWatcher::getDataInFormat(Atom fmtatom) const
     Window   win   = owner->winId();
     Display *dpy   = owner->x11Display();
 
-    XConvertSelection( dpy, qt_clipboard_atom, fmtatom,
+    XConvertSelection( dpy, XA_PRIMARY, fmtatom,
 		       qt_selection_property, win, CurrentTime );
     XFlush( dpy );
 
@@ -883,12 +882,12 @@ void QClipboard::setData( QMimeSource* src )
     emit dataChanged();
 
     // ### 3 round trips per selection change?  this should be optimized...
-    Window prevOwner = XGetSelectionOwner( dpy, qt_clipboard_atom );
-    XSetSelectionOwner( dpy, qt_clipboard_atom, win, qt_x_time );
+    Window prevOwner = XGetSelectionOwner( dpy, XA_PRIMARY );
+    XSetSelectionOwner( dpy, XA_PRIMARY, win, qt_x_time );
 
     // ### perhaps this should be CHECK_RANGE ?
 #if defined(DEBUG)
-    if ( XGetSelectionOwner(dpy,qt_clipboard_atom) != win ) {
+    if ( XGetSelectionOwner(dpy,XA_PRIMARY) != win ) {
 	qWarning( "QClipboard::setData: Cannot set X11 selection owner" );
 	return;
     }

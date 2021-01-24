@@ -2275,8 +2275,8 @@ void QMultiLineEdit::mouseReleaseEvent( QMouseEvent *e )
 
 #ifndef QT_NO_CLIPBOARD
 #if defined(_WS_X11_)
-    //else if ( echoMode() == Normal )
-//	copy();
+    else if ( echoMode() == Normal )
+	copy();
 #endif
 
     if ( e->button() == MidButton && !readOnly ) {
@@ -2743,8 +2743,8 @@ void QMultiLineEdit::markWord( int posx, int posy )
 
 #ifndef QT_NO_CLIPBOARD
 #if defined(_WS_X11_)
-//    if ( echoMode() == Normal )
-//	copy();
+    if ( echoMode() == Normal )
+	copy();
 #endif
 #endif
 }

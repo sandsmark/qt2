@@ -319,8 +319,6 @@ Atom		qt_gbackground_properties	= 0;
 Atom 		qt_x_incr		= 0;
 bool		qt_broken_wm		= FALSE;
 
-Atom 		qt_clipboard_atom	= 0;
-
 static Window	mouseActWindow	     = 0;	// window where mouse is
 static int	mouseButtonPressed   = 0;	// last mouse button pressed
 static int	mouseButtonState     = 0;	// mouse button state
@@ -1398,7 +1396,6 @@ void qt_init_internal( int *argcptr, char **argv, Display *display )
 	qt_x11_intern_atom( "GNOME_BACKGROUND_PROPERTIES", &qt_gbackground_properties );
 	qt_x11_intern_atom( "_SGI_DESKS_MANAGER", &qt_4dwm_desks_manager );
 	qt_x11_intern_atom( "INCR", &qt_x_incr );
-	qt_x11_intern_atom( "CLIPBOARD", &qt_clipboard_atom );
 
 	qt_xdnd_setup();
 	qt_x11_motifdnd_init();
