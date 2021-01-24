@@ -1029,7 +1029,7 @@ void QLineEdit::mouseReleaseEvent( QMouseEvent * e )
 
 #ifndef QT_NO_CLIPBOARD
 #if defined(_WS_X11_)
-    copy();
+    //copy();
 #endif
 
     if ( !d->readonly && e->button() == MidButton ) {
@@ -1185,8 +1185,8 @@ void QLineEdit::newMark( int pos, bool c )
     setCursorPosition( pos );
 #ifndef QT_NO_CLIPBOARD
 #if defined(_WS_X11_)
-    if ( c )
-	copy();
+//    if ( c )
+//	copy();
 #endif
 #endif
 }
@@ -1213,7 +1213,7 @@ void QLineEdit::markWord( int pos )
 
 #ifndef QT_NO_CLIPBOARD
 #if defined(_WS_X11_)
-    copy();
+//    copy();
 #endif
 #endif
 }

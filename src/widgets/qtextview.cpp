@@ -685,8 +685,8 @@ void QTextView::viewportMouseReleaseEvent( QMouseEvent* e )
 #ifndef QT_NO_CLIPBOARD
 	if ( d->dragselection ) {
 #if defined(_WS_X11_)
-	    if ( style() == MotifStyle )
-		copy();
+//	    if ( style() == MotifStyle )
+//		copy();
 #endif
 	    d->dragselection = FALSE;
 	} else
@@ -880,7 +880,7 @@ void QTextView::selectAll()
     viewport()->update();
     d->selection = TRUE;
 #if defined(_WS_X11_)
-    copy();
+    //copy();
 #endif
 }
 
